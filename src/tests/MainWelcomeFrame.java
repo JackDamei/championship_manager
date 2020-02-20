@@ -1,7 +1,8 @@
-package view;
+package tests;
 
 import javax.swing.*;
-import java.awt.*;
+
+import view.WelcomeFrame;
 
 public class MainWelcomeFrame {
 	

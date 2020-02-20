@@ -1,32 +1,41 @@
 package view;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 
 import javax.swing.*;
+import controller.files.ChampionshipImporter;
+import model.Championship;
 
 public class WelcomePanel extends JPanel {
 
 	public WelcomePanel () {
 		this.setBackground(Color.WHITE);
-		JButton create = new JButton("Create championship");
-		JButton load = new JButton("Load an existing championship");
-		this.add(create);
-		this.add(load);
+		this.setLayout(new GridBagLayout());
 		
+		GridBagConstraints gbc = new GridBagConstraints();		
+		JPanel buttons = new JPanel(new GridBagLayout());
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+
+		JButton create = new JButton("Create championship");
 		create.addActionListener(new CreateListener());
+		buttons.add(create, gbc);
+		
+		JButton load = new JButton("Load an existing championship");
 		load.addActionListener(new LoadListener());
+		buttons.add(load, gbc);
+		
+		gbc.weighty = 1;
+		this.add(buttons, gbc);		
 	}
-	
-	
+		
 	private class CreateListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			createAction();
 		}
-		
 	}
 	private class LoadListener implements ActionListener{
 		@Override
@@ -44,8 +53,14 @@ public class WelcomePanel extends JPanel {
 		int returnVal = fc.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			// TODO file loading and go to Championship DashBoard
-
+			ChampionshipImporter ci = new ChampionshipImporter();
+			Championship champ = ci.makeImport(file.getAbsolutePath());
+			
+			JPanel next = new DashboardPanel(champ);
+			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			frame.setContentPane(next);
+			frame.repaint();
+			frame.revalidate();
 		}
 	}
 	
