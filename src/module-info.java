@@ -1,0 +1,2 @@
+module championship_manager {
+}
