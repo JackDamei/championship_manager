@@ -10,6 +10,8 @@ import model.Championship;
 
 public class WelcomePanel extends JPanel {
 
+	private static final long serialVersionUID = -1043373303350905699L;
+
 	public WelcomePanel () {
 		this.setBackground(Color.WHITE);
 		this.setLayout(new GridBagLayout());
@@ -46,6 +48,11 @@ public class WelcomePanel extends JPanel {
 	
 	private void createAction() {
 		// TODO go to formulary panel
+		JPanel next = new CreationPanel();
+		WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
+		frame.setContentPane(next);
+		frame.repaint();
+		frame.revalidate();
 	}
 	
 	public void loadAction() {
@@ -57,7 +64,8 @@ public class WelcomePanel extends JPanel {
 			Championship champ = ci.makeImport(file.getAbsolutePath());
 			
 			JPanel next = new DashboardPanel(champ);
-			JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+			WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
+			frame.setChamp(champ);
 			frame.setContentPane(next);
 			frame.repaint();
 			frame.revalidate();

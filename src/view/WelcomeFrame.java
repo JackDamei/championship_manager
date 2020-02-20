@@ -6,6 +6,8 @@ import model.Championship;
 
 public class WelcomeFrame extends JFrame {
 
+	private static final long serialVersionUID = -7943527182790877227L;
+
 	protected Championship champ;
 	
 	public WelcomeFrame() {
@@ -21,6 +23,13 @@ public class WelcomeFrame extends JFrame {
 		JPanel pan = new WelcomePanel();
 		this.setContentPane(pan);
 		this.setVisible(true);
+	}
+	
+	public Championship getChamp () {
+		return champ;
+	}
+	public void setChamp (Championship champ) {
+		this.champ = champ;
 	}
 	
 }
