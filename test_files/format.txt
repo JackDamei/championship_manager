@@ -1,0 +1,12 @@
+Here is the format for imported/exported files (.champ extension)
+
+/-Beginning-Of-File-/
+championship name
+number_of_teams
+team_names
+home and away format (Y or N)
+for each game : home_score away_score (-1 if not played)
+/-End-Of-File-/
+
+
+NB: we will start with no tie breakers, it will be added lately
