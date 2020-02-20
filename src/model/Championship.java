@@ -4,6 +4,7 @@ public class Championship {
 
 	protected String name;
 	protected int size;
+	protected int length;
 	protected Team[] teams;
 	protected Week[] calendar;
 	protected Standings standings;
@@ -22,16 +23,6 @@ public class Championship {
 		return calendar[i];
 	}
 
-	public void createCalendar(boolean home_and_away) {
-		int size = this.size;
-		if (size%2 == 0)
-			size--;
-		if (home_and_away)
-			size *= 2;
-		this.calendar = new Week[size];
-		for (int i=0; i<this.size; i++)
-			teams[i].setCalendar(size);
-	}
 	public void addWeek(int i, Week week) {
 		calendar[i] = week;
 	}
@@ -39,8 +30,12 @@ public class Championship {
 	public String getName() {
 		return name;
 	}
-	int getSize() {
+	public int getSize() {
 		return size;
+	}
+	
+	public int getLength() {
+		return length;
 	}
 
 	public Team getTeam(int i) {

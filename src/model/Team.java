@@ -10,6 +10,10 @@ public class Team {
 		this.name = name;
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public Matchup[] getCalendar() {
 		return calendar;
 	}

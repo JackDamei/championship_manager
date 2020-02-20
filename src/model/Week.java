@@ -16,8 +16,8 @@ public class Week {
 		return champ;
 	}
 	
-	public Matchup[] getMatchups() {
-		return matchups;
+	public Matchup getMatchups(int i) {
+		return matchups[i];
 	}
 	public void setMatchup(int i, Matchup matchup) {
 		matchups[i] = matchup;
