@@ -1,6 +1,8 @@
 package model;
 
-import model.standings.Standings;
+import java.util.ArrayList;
+
+import model.standings.Tiebreaker;
 
 public class Championship {
 
@@ -9,7 +11,7 @@ public class Championship {
 	protected int length;
 	protected Team[] teams;
 	protected Week[] calendar;
-	protected Standings standings;
+	protected ArrayList<Tiebreaker> tiebreakers;
 	
 	public Championship (String name, int size, String[] team_names) {
 		this.name = name;
@@ -18,7 +20,8 @@ public class Championship {
 		for (int i=0; i<size; i++) {
 			teams[i] = new Team(team_names[i]);
 		}
-		standings = new Standings(size);
+		tiebreakers = new ArrayList<Tiebreaker>();
+		// TODO add default tiebreaker
 	}
 
 	public Week getWeek(int i) {
@@ -43,9 +46,5 @@ public class Championship {
 	public Team getTeam(int i) {
 		return teams[i];
 	}
-
-	public Standings getStandings() {
-		return standings;
-	}	
 	
 }

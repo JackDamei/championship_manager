@@ -1,7 +1,7 @@
 package model;
 
 public class Matchup {
-	
+
 	protected int week;
 	protected Team home_team;
 	protected Team away_team;
@@ -15,7 +15,7 @@ public class Matchup {
 		this.away_team = away_team;
 		played = false;
 	}
-	
+
 	public int getWeek() {
 		return week;
 	}
@@ -43,9 +43,52 @@ public class Matchup {
 		this.away_score = away_score;
 		this.played = true;
 	}
-	
+
 	public void cancelResult () {
 		this.played = false;
 	}
 
+	public boolean isHere (Team t) {
+		return (t == home_team) || (t == away_team);
+	}
+	public boolean isHome (Team t) {
+		return t == home_team;
+	}
+	public Result getResult (boolean home) {
+		if (!played)
+			return Result.NOT_PLAYED;
+		if (home_score == away_score)
+			return Result.TIE;
+		if (home) {
+			if (home_score > away_score)
+				return Result.WIN;
+			return Result.LOSS;
+		}
+		if (away_score > home_score)
+			return Result.WIN;
+		return Result.LOSS;
+	}
+	public int getGoalsFor (boolean home) {
+		if (home)
+			return home_score;
+		return away_score;
+	}
+
+	public String getScore() {
+		if (!played) {
+			return "-1";
+		}
+		return home_score+" "+away_score;
+	}
+
+	public boolean equals (Matchup other) {
+		if (!this.home_team.getName().equals(other.home_team.getName()))
+			return false;
+		if (!this.away_team.getName().equals(other.away_team.getName()))
+			return false;
+		if (!played)
+			return true;
+		return (this.home_score==other.home_score && this.away_score==other.away_score);
+	}
+	
 }
