@@ -7,6 +7,8 @@ import model.Week;
 
 public class RibbonAlgoTest {
 	
+	// VALIDATED
+	
 	static String [] names = {"1", "2", "3", "4"};
 	
 	public static void main (String [] args) {

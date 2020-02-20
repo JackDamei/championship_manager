@@ -1,5 +1,7 @@
 package model;
 
+import model.standings.Standings;
+
 public class Championship {
 
 	protected String name;

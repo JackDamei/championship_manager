@@ -1,4 +1,4 @@
-package model.tiebreakers;
+package model.standings;
 
 public abstract class Tiebreaker {
 
