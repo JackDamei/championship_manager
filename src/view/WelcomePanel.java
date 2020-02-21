@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 
 import javax.swing.*;
@@ -22,32 +21,18 @@ public class WelcomePanel extends JPanel {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		JButton create = new JButton("Create championship");
-		create.addActionListener(new CreateListener());
+		create.addActionListener(e -> createAction());
 		buttons.add(create, gbc);
 		
 		JButton load = new JButton("Load an existing championship");
-		load.addActionListener(new LoadListener());
+		load.addActionListener(e -> loadAction());
 		buttons.add(load, gbc);
 		
 		gbc.weighty = 1;
 		this.add(buttons, gbc);		
 	}
-		
-	private class CreateListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			createAction();
-		}
-	}
-	private class LoadListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			loadAction();
-		}
-	}
-	
+			
 	private void createAction() {
-		// TODO go to formulary panel
 		JPanel next = new CreationPanel();
 		WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
 		frame.setContentPane(next);
@@ -63,8 +48,8 @@ public class WelcomePanel extends JPanel {
 			ChampionshipImporter ci = new ChampionshipImporter();
 			Championship champ = ci.makeImport(file.getAbsolutePath());
 			
-			JPanel next = new DashboardPanel(champ);
 			WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
+			JPanel next = new DashboardPanel();
 			frame.setChamp(champ);
 			frame.setContentPane(next);
 			frame.repaint();

@@ -16,7 +16,6 @@ public class WelcomeFrame extends JFrame {
 		
 		this.setTitle("Championship Manager");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setSize(1000,1000);
 		
 		// Welcome panel

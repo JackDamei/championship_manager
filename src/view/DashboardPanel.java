@@ -4,17 +4,20 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import model.Championship;
-
 public class DashboardPanel extends JPanel {
 
 	private static final long serialVersionUID = -603170724879245053L;
 
-	public DashboardPanel (Championship champ) {
+	public DashboardPanel () {
 		this.setBackground(Color.WHITE);
-		System.out.println("Here is dashboard");
+		this.setLayout(new BorderLayout());
 		
 		// TODO add menu
+		JPanel menu = new MenuPanel();
+		this.add(menu, BorderLayout.NORTH);
+		
+		JPanel content = new JPanel();
+		this.add(content, BorderLayout.CENTER);
 		
 		// TODO display teams
 		
