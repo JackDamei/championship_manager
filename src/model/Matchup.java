@@ -91,4 +91,15 @@ public class Matchup {
 		return (this.home_score==other.home_score && this.away_score==other.away_score);
 	}
 	
+	public String toString() {
+		String s = "";
+		s += home_team.getName() + "   ";
+		if (isPlayed())
+			s += home_score +" - "+ away_score;
+		else
+			s += "VS";
+		s += "   " + away_team.getName();
+		return s;
+	}
+	
 }

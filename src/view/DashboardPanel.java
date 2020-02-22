@@ -16,10 +16,11 @@ public class DashboardPanel extends JPanel {
 		JPanel menu = new MenuPanel();
 		this.add(menu, BorderLayout.NORTH);
 		
-		JPanel content = new JPanel();
-		this.add(content, BorderLayout.CENTER);
-		
+		JPanel body = new JPanel();
 		// TODO display teams
+
+		this.add(body, BorderLayout.CENTER);
+		
 		
 	}
 	

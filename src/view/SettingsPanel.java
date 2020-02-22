@@ -89,9 +89,19 @@ public class SettingsPanel extends JPanel {
 	}
 	private void saveAction() {
 		// TODO Auto-generated method stub
+		WelcomeFrame frame = ((WelcomeFrame) SwingUtilities.getWindowAncestor(this));
+		JPanel next = new DashboardPanel();
+		frame.setContentPane(next);
+		frame.repaint();
+		frame.revalidate();		
 	}
 	private void toDashboardAction() {
 		// TODO Auto-generated method stub
+		WelcomeFrame frame = ((WelcomeFrame) SwingUtilities.getWindowAncestor(this));
+		JPanel next = new DashboardPanel();
+		frame.setContentPane(next);
+		frame.repaint();
+		frame.revalidate();		
 	}
 
 

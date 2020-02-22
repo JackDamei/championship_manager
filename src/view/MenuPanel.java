@@ -46,7 +46,8 @@ public class MenuPanel extends JPanel {
 	
 	public void toResultsAction () {
 		WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
-		JPanel next = new ResultsPanel();
+		Championship champ = frame.getChamp();
+		JPanel next = new ResultsPanel(champ);
 		frame.setContentPane(next);
 		frame.repaint();
 		frame.revalidate();
