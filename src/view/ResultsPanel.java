@@ -17,8 +17,6 @@ public class ResultsPanel extends JPanel {
 	private JPanel menu, body, top, bottom;
 	private Championship champ;
 
-	// TODO add menu above -> and new JPanel for bottom
-		
 	public ResultsPanel(Championship champ) {
 
 		this.setLayout(new BorderLayout());
@@ -32,7 +30,9 @@ public class ResultsPanel extends JPanel {
 		this.champ = champ;
 		int length = champ.getLength();
 
-		int currentWeek = length-1; // show last week by default
+		// show first week with missing result
+		// show last week by default
+		int currentWeek = length-1;
 		for (int w=0; w<length; w++) {
 			for (int i=0; i<champ.getSize()/2; i++) {
 				if (!champ.getWeek(w).getMatchups(i).isPlayed()) {
@@ -42,8 +42,6 @@ public class ResultsPanel extends JPanel {
 				}
 			}
 		}
-
-		// TODO add scroller for week selection with correct default value
 
 		top = new JPanel();
 
@@ -61,8 +59,6 @@ public class ResultsPanel extends JPanel {
 		top.add(selectWeek);
 		body.add(top, BorderLayout.NORTH);
 
-		// TODO displays first week with missing scores, otherwise the last week
-		// TODO for each game, add option for editing score
 		bottom = displayWeek(champ, currentWeek);
 		body.add(bottom, BorderLayout.CENTER);
 		
@@ -107,12 +103,11 @@ public class ResultsPanel extends JPanel {
 	}
 
 	private void setResultAction(Matchup game, JPanel panel) {
-		// TODO
-		// create box
 		JTextField homeField, awayField;
 		JPanel fieldPanel;
 		boolean validated = false;
 
+		// create box
 		do {
 			fieldPanel = new JPanel();
 			homeField = new JTextField(3);
@@ -130,7 +125,7 @@ public class ResultsPanel extends JPanel {
 			}
 			validated = ResultsController.isValid(homeField, awayField);
 			if (!validated)
-				JOptionPane.showConfirmDialog(bottom, "Invalid values, try again.");
+				JOptionPane.showMessageDialog(bottom, "Invalid values, try again.");
 		} while (!validated);
 		// validation of values
 

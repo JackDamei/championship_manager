@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-import model.standings.Tiebreaker;
+import model.standings.tiebreaker.Tiebreaker;
 
 public class Championship {
 

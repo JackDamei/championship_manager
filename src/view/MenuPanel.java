@@ -55,7 +55,7 @@ public class MenuPanel extends JPanel {
 	
 	public void toStandingsAction () {
 		WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
-		JPanel next = new StandingsPanel();
+		JPanel next = new StandingsPanel(frame.getChamp());
 		frame.setContentPane(next);
 		frame.repaint();
 		frame.revalidate();
