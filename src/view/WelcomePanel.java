@@ -4,7 +4,8 @@ import java.awt.*;
 import java.io.File;
 
 import javax.swing.*;
-import controller.files.ChampionshipImporter;
+
+import controller.io.ChampionshipImporter;
 import model.Championship;
 
 public class WelcomePanel extends JPanel {

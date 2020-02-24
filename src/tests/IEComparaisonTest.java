@@ -1,7 +1,7 @@
 package tests;
 
-import controller.files.ChampionshipExporter;
-import controller.files.ChampionshipImporter;
+import controller.io.ChampionshipExporter;
+import controller.io.ChampionshipImporter;
 import model.Championship;
 
 public class IEComparaisonTest {

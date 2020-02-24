@@ -1,4 +1,4 @@
-package controller.files;
+package controller.io;
 
 public class FormatErrorException extends Exception {
 

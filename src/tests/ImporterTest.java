@@ -1,6 +1,6 @@
 package tests;
 
-import controller.files.ChampionshipImporter;
+import controller.io.ChampionshipImporter;
 
 public class ImporterTest {
 

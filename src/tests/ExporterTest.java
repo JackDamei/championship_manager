@@ -1,6 +1,6 @@
 package tests;
 
-import controller.files.ChampionshipExporter;
+import controller.io.ChampionshipExporter;
 import model.Championship;
 import model.MatchupMaker;
 
