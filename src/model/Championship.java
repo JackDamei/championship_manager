@@ -1,5 +1,8 @@
 package model;
 
+import model.standings.pointmodel.ClassicPointModel;
+import model.standings.pointmodel.PointModel;
+import model.standings.tiebreaker.DefaultTiebreaker;
 import model.standings.tiebreaker.Tiebreaker;
 
 public class Championship {
@@ -10,6 +13,7 @@ public class Championship {
 	protected Team[] teams;
 	protected Week[] calendar;
 	protected Tiebreaker tiebreaker;
+	protected PointModel pModel;
 	
 	public Championship (String name, int size, String[] team_names) {
 		this.name = name;
@@ -18,6 +22,9 @@ public class Championship {
 		for (int i=0; i<size; i++) {
 			teams[i] = new Team(team_names[i]);
 		}
+		// default initialization
+		tiebreaker = new DefaultTiebreaker();
+		pModel = new ClassicPointModel();
 	}
 
 	public Tiebreaker getTiebreaker() {
@@ -48,6 +55,13 @@ public class Championship {
 
 	public Team getTeam(int i) {
 		return teams[i];
+	}
+	
+	public PointModel getPModel() {
+		return pModel;
+	}
+	public void setPModel (PointModel pModel) {
+		this.pModel = pModel;
 	}
 	
 	public boolean equals (Championship other) {

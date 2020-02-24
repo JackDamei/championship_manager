@@ -1,12 +1,8 @@
 package view;
 
-import java.io.File;
-
 import javax.swing.*;
 
 import controller.MenuController;
-import controller.io.ChampionshipExporter;
-import model.Championship;
 
 public class MenuPanel extends JPanel {
 
@@ -14,6 +10,8 @@ public class MenuPanel extends JPanel {
 	private MenuController controller;
 	
 	public MenuPanel () {
+		
+		controller = new MenuController(this);
 	
 		// create menu buttons
 		JButton toDashboard = new JButton("Dashboard");

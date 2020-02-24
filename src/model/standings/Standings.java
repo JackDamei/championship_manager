@@ -16,9 +16,9 @@ public class Standings {
 	protected Championship champ;
 	protected final int start, end;
 
-	public Standings (Championship champ, PointModel pModel, int start, int end) {
+	public Standings (Championship champ, int start, int end) {
 		this.champ = champ;
-		this.pModel = pModel;
+		this.pModel = champ.getPModel();
 		// validity of starting week
 		if (start < 0)
 			this.start = 0;

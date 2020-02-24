@@ -4,20 +4,19 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import model.Championship;
-import model.MatchupMaker;
-import model.standings.tiebreaker.DefaultTiebreaker;
-import model.standings.tiebreaker.Tiebreaker;
+import controller.SettingsController;
 
 public class SettingsPanel extends JPanel {
 
 	private static final long serialVersionUID = 5482857352984389517L;
 
 	//private boolean isCreated;
-	private JRadioButton yesButton, noButton;
+	public JRadioButton yesButton, noButton;
+	private SettingsController controller;
 
 	public SettingsPanel(boolean isCreated) {
 
+		controller = new SettingsController(this);
 		//this.isCreated = isCreated;
 
 		this.setLayout(new BorderLayout());
@@ -46,67 +45,28 @@ public class SettingsPanel extends JPanel {
 		this.add(mid, BorderLayout.CENTER);
 
 		JPanel bottom = new JPanel();
+		// if created, button back to dashboard
+		// if created, button save changes
+		// if not created, button back to team names
+		// if not created, button let's go
 		if (isCreated) {
-			// TODO if created, button back to dashboard
 			JButton toDashboard = new JButton("Back to dashboard");
-			toDashboard.addActionListener(e -> toDashboardAction());
-			// TODO if created, button save changes
+			toDashboard.addActionListener(e -> controller.toDashboardAction());
 			JButton saveChanges = new JButton("Save changes");
-			saveChanges.addActionListener(e -> saveAction());
+			saveChanges.addActionListener(e -> controller.saveAction());
 
 			bottom.add(toDashboard);
 			bottom.add(saveChanges);
 		} else {
-			// TODO if not created, button back to team names
 			JButton toTeamNames = new JButton("Back to team names");
-			toTeamNames.addActionListener(e -> toTeamAction());
-			// TODO if not created, button let's go
+			toTeamNames.addActionListener(e -> controller.toTeamAction());
 			JButton toCreation = new JButton("Let's go!");
-			toCreation.addActionListener(e -> toCreationAction());
+			toCreation.addActionListener(e -> controller.toCreationAction());
 
 			bottom.add(toTeamNames);
 			bottom.add(toCreation);
 		}
 		this.add(bottom, BorderLayout.SOUTH);
 	}
-
-
-	private void toCreationAction() {
-		WelcomeFrame frame = ((WelcomeFrame) SwingUtilities.getWindowAncestor(this));
-		Championship champ = frame.getChamp();
-		boolean homeaway = yesButton.isSelected();
-		MatchupMaker.make(champ, homeaway);
-		// TODO add tiebrakers in later versions
-		Tiebreaker tiebreaker = new DefaultTiebreaker();
-		champ.setTiebreaker(tiebreaker);
-		JPanel next = new DashboardPanel();
-		frame.setContentPane(next);
-		frame.repaint();
-		frame.revalidate();		
-	}
-	private void toTeamAction() {
-		JPanel next = new CreationPanel();
-		WelcomeFrame frame = (WelcomeFrame) SwingUtilities.getWindowAncestor(this);
-		frame.setContentPane(next);
-		frame.repaint();
-		frame.revalidate();
-	}
-	private void saveAction() {
-		// TODO Auto-generated method stub
-		WelcomeFrame frame = ((WelcomeFrame) SwingUtilities.getWindowAncestor(this));
-		JPanel next = new DashboardPanel();
-		frame.setContentPane(next);
-		frame.repaint();
-		frame.revalidate();		
-	}
-	private void toDashboardAction() {
-		// TODO Auto-generated method stub
-		WelcomeFrame frame = ((WelcomeFrame) SwingUtilities.getWindowAncestor(this));
-		JPanel next = new DashboardPanel();
-		frame.setContentPane(next);
-		frame.repaint();
-		frame.revalidate();		
-	}
-
 
 }

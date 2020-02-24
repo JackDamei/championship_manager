@@ -4,41 +4,35 @@ import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableColumn;
 
+import controller.StandingsController;
 import model.Championship;
 import model.standings.Ranking;
 import model.standings.SortingCriteria;
 import model.standings.StandingComparator;
 import model.standings.Standings;
-import model.standings.pointmodel.ClassicPointModel;
-import model.standings.pointmodel.PointModel;
 
 public class StandingsPanel extends JPanel {
 
 	private static final long serialVersionUID = -6893649172190929465L;
 
-	private JPanel menu, body;
+	public JPanel menu, body;
 	private JPanel optionPanel, sortPanel, weekPanel;
-	private JPanel tablePanel;
-	private JComboBox<SortingCriteria> criteriaSelector;
-	private JComboBox<String> sortSelector;
-	private JComboBox<String> startWeekSelector, endWeekSelector;
-	private Championship champ;
-	private int startWeek, endWeek;
-	private ArrayList<Ranking> rankings;
-	private PointModel pModel;
+	public JPanel tablePanel;
+	public JComboBox<SortingCriteria> criteriaSelector;
+	public JComboBox<String> sortSelector;
+	public JComboBox<String> startWeekSelector, endWeekSelector;
+	public Championship champ;
+	public int startWeek, endWeek;
+	public ArrayList<Ranking> rankings;
+	private StandingsController controller;
 
 	public StandingsPanel(Championship champ) {
-
-		pModel = new ClassicPointModel();
-
+		
+		controller = new StandingsController(this);
+		
 		this.setLayout(new BorderLayout());
 
 		menu = new MenuPanel();
@@ -62,9 +56,9 @@ public class StandingsPanel extends JPanel {
 				}
 			}
 		}
-		Standings stand = new Standings(champ, pModel, startWeek, endWeek);
-		rankings = stand.generateRankings();
-		champ.getTiebreaker().sort(rankings);
+
+		// generate rankings
+		this.generateRankings();
 
 		optionPanel = new JPanel();
 		optionPanel.setLayout(new BorderLayout());
@@ -74,14 +68,14 @@ public class StandingsPanel extends JPanel {
 		SortingCriteria[] criteriaList = SortingCriteria.values();
 		criteriaSelector = new JComboBox<SortingCriteria>(criteriaList);
 		criteriaSelector.setSelectedItem(SortingCriteria.POINTS);
-		criteriaSelector.addActionListener(e -> criteriaSelectorAction());;
+		criteriaSelector.addActionListener(e -> controller.criteriaSelectorAction());;
 		// scroller if ascending or descending
 		String[] sortList = {"Ascending", "Descending"};
 		sortSelector = new JComboBox<String>(sortList);
 		sortSelector.setSelectedItem("Descending");
 		// button to validate
 		JButton confirmButton = new JButton("Sort");
-		confirmButton.addActionListener(e -> confirmAction());
+		confirmButton.addActionListener(e -> controller.confirmAction());
 		
 		sortPanel.add(new JLabel("Sort by"));
 		sortPanel.add(criteriaSelector);
@@ -98,10 +92,10 @@ public class StandingsPanel extends JPanel {
 		}
 		startWeekSelector = new JComboBox<String>(weeks);
 		startWeekSelector.setSelectedItem("Week 1");
-		startWeekSelector.addActionListener(e -> startSelectorAction());
+		startWeekSelector.addActionListener(e -> controller.startSelectorAction());
 		endWeekSelector = new JComboBox<String>(weeks);
 		endWeekSelector.setSelectedItem("Week "+(endWeek+1));
-		endWeekSelector.addActionListener(e -> endSelectorAction());
+		endWeekSelector.addActionListener(e -> controller.endSelectorAction());
 		weekPanel.add(new JLabel("Start week"));
 		weekPanel.add(startWeekSelector);
 		weekPanel.add(Box.createHorizontalStrut(10));
@@ -117,7 +111,14 @@ public class StandingsPanel extends JPanel {
 		this.add(body, BorderLayout.CENTER);
 	}
 
-	private JPanel createTable() {
+	
+	public void generateRankings() {
+		Standings stand = new Standings(champ, startWeek, endWeek);
+		rankings = stand.generateRankings();
+		champ.getTiebreaker().sort(rankings);
+	}
+
+	public JPanel createTable() {
 
 		// get selected criteria (initialized before)
 		SortingCriteria sc = (SortingCriteria) criteriaSelector.getSelectedItem();
@@ -149,51 +150,6 @@ public class StandingsPanel extends JPanel {
 		panel.add(table);
 		
 		return panel;
-	}
-
-	private void criteriaSelectorAction () {
-		SortingCriteria sc = (SortingCriteria) criteriaSelector.getSelectedItem();
-		if (SortingCriteria.isGAgainst(sc))
-			sortSelector.setSelectedItem("Ascending");
-		else
-			sortSelector.setSelectedItem("Descending");
-	}
-
-	private void startSelectorAction() {
-		String str = (String) startWeekSelector.getSelectedItem();
-		// remove 1 because index starts at 0
-		startWeek = Integer.parseInt(str.split(" ")[1]) - 1;
-		if (startWeek > endWeek)
-			endWeekSelector.setSelectedItem(str);			
-	}
-	
-	private void endSelectorAction() {
-		String str = (String) endWeekSelector.getSelectedItem();
-		// remove 1 because index starts at 0
-		endWeek = Integer.parseInt(str.split(" ")[1]) - 1;
-		if (endWeek < startWeek)
-			startWeekSelector.setSelectedItem(str);			
-	}
-	
-	private void confirmAction() {
-		String str;
-		body.remove(tablePanel);
-		body.validate();
-
-		// remove 1 because index starts at 0
-		str = (String) startWeekSelector.getSelectedItem();
-		startWeek = Integer.parseInt(str.split(" ")[1]) - 1;
-		str = (String) endWeekSelector.getSelectedItem();
-		endWeek = Integer.parseInt(str.split(" ")[1]) - 1;
-
-		Standings stand = new Standings(champ,pModel, startWeek, endWeek);
-		rankings = stand.generateRankings();
-		champ.getTiebreaker().sort(rankings);
-		
-		tablePanel = createTable();
-		body.add(tablePanel);
-		body.revalidate();
-		body.repaint();
 	}
 
 }
