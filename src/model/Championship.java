@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 import model.standings.tiebreaker.Tiebreaker;
 
 public class Championship {
@@ -11,7 +9,7 @@ public class Championship {
 	protected int length;
 	protected Team[] teams;
 	protected Week[] calendar;
-	protected ArrayList<Tiebreaker> tiebreakers;
+	protected Tiebreaker tiebreaker;
 	
 	public Championship (String name, int size, String[] team_names) {
 		this.name = name;
@@ -20,11 +18,15 @@ public class Championship {
 		for (int i=0; i<size; i++) {
 			teams[i] = new Team(team_names[i]);
 		}
-		tiebreakers = new ArrayList<Tiebreaker>();
-		// TODO add default tiebreaker
-		// TODO maybe an global ranking, useful in order to compare in case of manual tiebreaking
 	}
 
+	public Tiebreaker getTiebreaker() {
+		return tiebreaker;
+	}
+	public void setTiebreaker(Tiebreaker tiebreaker) {
+		this.tiebreaker = tiebreaker;
+	}
+	
 	public Week getWeek(int i) {
 		return calendar[i];
 	}

@@ -32,6 +32,7 @@ public class ChampionshipExporter {
 				for (int i=0; i<champ.getSize()/2; i++)
 					bw.write(champ.getWeek(w).getMatchups(i).getScore()+"\n");
 			}
+			bw.write(champ.getTiebreaker().toString()+"\n");
 			bw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

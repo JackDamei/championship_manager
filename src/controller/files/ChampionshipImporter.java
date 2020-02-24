@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import model.Championship;
 import model.MatchupMaker;
+import model.standings.tiebreaker.DefaultTiebreaker;
 
 public class ChampionshipImporter {
 
@@ -51,6 +52,15 @@ public class ChampionshipImporter {
 				}
 			}
 
+			String tiebreakerStr = in.readLine();
+			switch (tiebreakerStr) {
+			case "defaultTiebreaker":
+				champ.setTiebreaker(new DefaultTiebreaker()); // redundant but it's for example, other TB will be implemented
+				break;
+			default:
+				champ.setTiebreaker(new DefaultTiebreaker());
+			}
+			
 			in.close();
 			
 		} catch (IOException e) {

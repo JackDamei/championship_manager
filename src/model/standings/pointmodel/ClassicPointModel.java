@@ -1,6 +1,7 @@
 package model.standings.pointmodel;
 
 import model.Matchup;
+import model.Result;
 import model.Team;
 
 public class ClassicPointModel implements PointModel {
@@ -14,16 +15,27 @@ public class ClassicPointModel implements PointModel {
 	}
 
 	public int getTPoints() {
-		return vPoints;
+		return tPoints;
 	}
 
 	public int getLPoints() {
 		return lPoints;
 	}
 
-	// useful is bonus system like in rugby, will be used in later version
+	// useful if bonus system like in rugby, will be used in later version
 	public int getPointsFromMatchup (Matchup matchup, Team team) {
-		// TODO
+		boolean home = matchup.isHome(team);
+		Result result = matchup.getResult(home);
+		switch (result) {
+		case WIN:
+			return vPoints;
+		case TIE:
+			return tPoints;
+		case LOSS:
+			return lPoints;
+		case NOT_PLAYED:
+			return 0;
+		}
 		return 0;
 	}
 

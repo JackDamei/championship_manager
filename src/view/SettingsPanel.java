@@ -6,6 +6,8 @@ import javax.swing.*;
 
 import model.Championship;
 import model.MatchupMaker;
+import model.standings.tiebreaker.DefaultTiebreaker;
+import model.standings.tiebreaker.Tiebreaker;
 
 public class SettingsPanel extends JPanel {
 
@@ -75,6 +77,8 @@ public class SettingsPanel extends JPanel {
 		boolean homeaway = yesButton.isSelected();
 		MatchupMaker.make(champ, homeaway);
 		// TODO add tiebrakers in later versions
+		Tiebreaker tiebreaker = new DefaultTiebreaker();
+		champ.setTiebreaker(tiebreaker);
 		JPanel next = new DashboardPanel();
 		frame.setContentPane(next);
 		frame.repaint();

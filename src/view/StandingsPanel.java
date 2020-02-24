@@ -2,16 +2,20 @@ package view;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 import model.Championship;
 import model.standings.Ranking;
 import model.standings.SortingCriteria;
+import model.standings.StandingComparator;
 import model.standings.Standings;
 import model.standings.pointmodel.ClassicPointModel;
 import model.standings.pointmodel.PointModel;
@@ -26,14 +30,12 @@ public class StandingsPanel extends JPanel {
 	private JComboBox<SortingCriteria> criteriaSelector;
 	private JComboBox<String> sortSelector;
 	private JComboBox<String> startWeekSelector, endWeekSelector;
-	//private Championship champ;
+	private Championship champ;
 	private int startWeek, endWeek;
 	private ArrayList<Ranking> rankings;
 	private PointModel pModel;
 
 	public StandingsPanel(Championship champ) {
-
-		// TODO rank all players
 
 		pModel = new ClassicPointModel();
 
@@ -45,7 +47,7 @@ public class StandingsPanel extends JPanel {
 		body = new JPanel();
 		body.setLayout(new BorderLayout());
 
-		//this.champ = champ;
+		this.champ = champ;
 		int length = champ.getLength();
 
 		// by default : from week 1 to last week with played game (def week 1)
@@ -60,8 +62,9 @@ public class StandingsPanel extends JPanel {
 				}
 			}
 		}
-		Standings stand = new Standings(champ,pModel, null, startWeek, endWeek);
+		Standings stand = new Standings(champ, pModel, startWeek, endWeek);
 		rankings = stand.generateRankings();
+		champ.getTiebreaker().sort(rankings);
 
 		optionPanel = new JPanel();
 		optionPanel.setLayout(new BorderLayout());
@@ -109,14 +112,43 @@ public class StandingsPanel extends JPanel {
 		body.add(optionPanel, BorderLayout.NORTH);
 
 		tablePanel = createTable();
-		// TODO table with all standings sorted by criteria then rank
+		body.add(tablePanel);
 
 		this.add(body, BorderLayout.CENTER);
 	}
 
 	private JPanel createTable() {
-		// TODO table from selected criteria
-		return null;
+
+		// get selected criteria (initialized before)
+		SortingCriteria sc = (SortingCriteria) criteriaSelector.getSelectedItem();
+		rankings.sort(new StandingComparator(sc));
+		if (sortSelector.getSelectedItem().equals("Descending"))
+			Collections.reverse(rankings);
+
+		JPanel panel = new JPanel();
+		// nb of columns : rank + name + all criterias
+		String[] columnNames = new String[SortingCriteria.values().length + 2];
+		columnNames[0] = "Rank";
+		columnNames[1] = "Team";
+		// TODO ranking to table
+		SortingCriteria[] scTab = SortingCriteria.values();
+		for (int i=0; i<scTab.length; i++)
+			columnNames[i+2] = scTab[i].getAbreviated();
+		Object[][] data = new Object[champ.getSize()][columnNames.length];
+		for (int i=0; i<rankings.size(); i++)
+			data[i] = rankings.get(i).toTable();
+		JTable table = new JTable(data, columnNames);
+		TableColumn column = null;
+		for (int i=0; i<columnNames.length; i++) {
+			column = table.getColumnModel().getColumn(i);
+			if (i == 1)
+				column.setPreferredWidth(120);
+			else
+				column.setPreferredWidth(40);
+		}
+		panel.add(table);
+		
+		return panel;
 	}
 
 	private void criteriaSelectorAction () {
@@ -130,19 +162,38 @@ public class StandingsPanel extends JPanel {
 	private void startSelectorAction() {
 		String str = (String) startWeekSelector.getSelectedItem();
 		// remove 1 because index starts at 0
-		startWeek = Integer.parseInt(str.split(" ")[1]) + 1;
+		startWeek = Integer.parseInt(str.split(" ")[1]) - 1;
 		if (startWeek > endWeek)
 			endWeekSelector.setSelectedItem(str);			
 	}
+	
 	private void endSelectorAction() {
 		String str = (String) endWeekSelector.getSelectedItem();
 		// remove 1 because index starts at 0
-		endWeek = Integer.parseInt(str.split(" ")[1]) + 1;
+		endWeek = Integer.parseInt(str.split(" ")[1]) - 1;
 		if (endWeek < startWeek)
 			startWeekSelector.setSelectedItem(str);			
 	}
+	
 	private void confirmAction() {
-		// TODO
+		String str;
+		body.remove(tablePanel);
+		body.validate();
+
+		// remove 1 because index starts at 0
+		str = (String) startWeekSelector.getSelectedItem();
+		startWeek = Integer.parseInt(str.split(" ")[1]) - 1;
+		str = (String) endWeekSelector.getSelectedItem();
+		endWeek = Integer.parseInt(str.split(" ")[1]) - 1;
+System.out.println("here "+startWeek+" "+endWeek);
+		Standings stand = new Standings(champ,pModel, startWeek, endWeek);
+		rankings = stand.generateRankings();
+		champ.getTiebreaker().sort(rankings);
+		
+		tablePanel = createTable();
+		body.add(tablePanel);
+		body.revalidate();
+		body.repaint();
 	}
 
 }

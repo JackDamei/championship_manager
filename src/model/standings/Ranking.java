@@ -55,7 +55,63 @@ public class Ranking {
 		a_losses = 0;
 		a_goals_for = 0;
 		a_goals_against = 0;
+		rank = -1;
+		tied = false;
 	}	
+		
+	public Object[] toTable () {
+		Object[] res = new Object[SortingCriteria.values().length + 2];
+		String str;
+		int gd;
+		str = "";
+		if (tied)
+			str = "T";
+		str += rank;
+		res[0] = str;
+		res[1] = team.getName();
+		res[2] = games_played;
+		res[3] = points;
+		res[4] = wins;
+		res[5] = ties;
+		res[6] = losses;
+		res[7] = goals_for;
+		res[8] = goals_against;
+		str = "";
+		gd = goals_for - goals_against;
+		if (gd > 0)
+			str = "+";
+		str += gd;
+		res[9] = str;
+		res[10] = h_games_played;
+		res[11] = h_points;
+		res[12] = h_wins;
+		res[13] = h_ties;
+		res[14] = h_losses;
+		res[15] = h_goals_for;
+		res[16] = h_goals_against;
+		str = "";
+		gd = h_goals_for - h_goals_against;
+		if (gd > 0)
+			str = "+";
+		str += gd;
+		res[17] = str;
+		res[18] = a_games_played;
+		res[19] = a_points;
+		res[20] = a_wins;
+		res[21] = a_ties;
+		res[22] = a_losses;
+		res[23] = a_goals_for;
+		res[24] = a_goals_against;
+		str = "";
+		gd = a_goals_for - a_goals_against;
+		if (gd > 0)
+			str = "+";
+		str += gd;
+		res[25] = str;
+		return res;
+	}
+
+	
 	
 	public Championship getChamp() {
 		return champ;
@@ -207,5 +263,5 @@ public class Ranking {
 	public void addA_goals_against(int a_goals_against) {
 		this.a_goals_against += a_goals_against;
 	}	
-
+	
 }

@@ -1,5 +1,10 @@
 package model.standings.tiebreaker;
 
-public abstract class Tiebreaker {
+import java.util.ArrayList;
 
+import model.standings.Ranking;
+
+public interface Tiebreaker {
+	public void sort(ArrayList<Ranking> rankings);
+	public String toString();
 }

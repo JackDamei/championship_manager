@@ -6,6 +6,7 @@ number_of_teams
 team_names
 home and away format (Y or N)
 for each game : home_score away_score (-1 if not played)
+tiebreaker
 /-End-Of-File-/
 
 

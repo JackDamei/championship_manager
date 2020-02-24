@@ -16,9 +16,8 @@ public class Standings {
 	protected Championship champ;
 	protected final int start, end;
 
-	public Standings (Championship champ, PointModel pModel, ArrayList<Tiebreaker> tiebreakers, int start, int end) {
+	public Standings (Championship champ, PointModel pModel, int start, int end) {
 		this.champ = champ;
-		this.tiebreakers = tiebreakers;
 		this.pModel = pModel;
 		// validity of starting week
 		if (start < 0)
@@ -62,7 +61,7 @@ public class Standings {
 				int goals_for = m.getGoalsFor(home);
 				int goals_against = m.getGoalsFor(!home);
 				int points = pModel.getPointsFromMatchup(m, team);
-
+				
 				r.addGames_played(1);
 				r.addGoals_for(goals_for);
 				r.addGoals_against(goals_against);
