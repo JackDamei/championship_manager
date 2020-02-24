@@ -185,7 +185,7 @@ public class StandingsPanel extends JPanel {
 		startWeek = Integer.parseInt(str.split(" ")[1]) - 1;
 		str = (String) endWeekSelector.getSelectedItem();
 		endWeek = Integer.parseInt(str.split(" ")[1]) - 1;
-System.out.println("here "+startWeek+" "+endWeek);
+
 		Standings stand = new Standings(champ,pModel, startWeek, endWeek);
 		rankings = stand.generateRankings();
 		champ.getTiebreaker().sort(rankings);
