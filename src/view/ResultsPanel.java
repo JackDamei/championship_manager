@@ -54,12 +54,9 @@ public class ResultsPanel extends JPanel {
 		}
 		weekSelector = new JComboBox<String>(weeks);
 		weekSelector.setSelectedItem("Week "+(currentWeek+1));
-
-		JButton selectWeek = new JButton("Select");
-		selectWeek.addActionListener(e -> controller.selectWeekAction());
+		weekSelector.addActionListener(e -> controller.selectWeekAction());
 
 		top.add(weekSelector);
-		top.add(selectWeek);
 		body.add(top, BorderLayout.NORTH);
 
 		bottom = displayWeek(champ, currentWeek);

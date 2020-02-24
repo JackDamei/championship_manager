@@ -20,10 +20,10 @@ public class ResultsController {
 		String s = (String) view.weekSelector.getSelectedItem();
 		int week = Integer.parseInt(s.split(" ")[1]);
 		week--; // remove 1 because index starts at 0 instead of 1 in display
-		view.remove(view.bottom);
+		view.body.remove(view.bottom);
 		view.validate();
 		view.bottom = view.displayWeek(view.champ, week);
-		view.add(view.bottom, BorderLayout.CENTER);
+		view.body.add(view.bottom, BorderLayout.CENTER);
 		view.revalidate();
 		view.repaint();
 	}
